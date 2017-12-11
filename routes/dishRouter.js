@@ -3,13 +3,14 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 var Dishes = require('../models/dishes');
+var Verify = require('./verify');
 
 var dishRouter = express.Router();
 dishRouter.use(bodyParser.json());
 
 dishRouter
   .route('/')
-  .get(function (req, res) {
+  .get(Verify.verifyOrdinaryUser,function (req, res) {
     Dishes
       .find({}, function (err, dish) {
         if (err)
@@ -17,7 +18,7 @@ dishRouter
         res.json(dish);
       });
   })
-  .post(function (req, res) {
+  .post(Verify.verifyOrdinaryUser,function (req, res) {
     Dishes
       .create(req.body, function (err, dish) {
         if (err)
