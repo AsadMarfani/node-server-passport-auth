@@ -13,7 +13,7 @@ exports.verifyOrdinaryUser = function (req, res, next) {
     jwt
       .verify(token, config.secretKey, function (err, decoded) {
         if (err) {
-          var err = new Error('You aren not authenticated');
+          var err = new Error('You are not authenticated');
           err.status = 401;
           return next(err);
         } else {
@@ -22,8 +22,26 @@ exports.verifyOrdinaryUser = function (req, res, next) {
         }
       });
   } else {
-    var err = new Error('You aren not authenticated');
-    err.status = 401;
+    console.log('No token provided');
+    var err = new Error('No token provided');
+    err.message = "No token provided";
+    err.status = 403;
+    return next(err);
+  }
+}
+exports.VerifyAdmin = function (req, res, next) {
+  if (req.decoded) {
+    if (req.decoded.admin) {
+      next();
+    } else {
+      var err = new Error('You are not authenticated to perform this option');
+      err.status = 401;
+      return next(err);
+    }
+  } else {
+    var err = new Error('Not authenticated');
+    err.message = "Not authenticated";
+    err.status = 403;
     return next(err);
   }
 }

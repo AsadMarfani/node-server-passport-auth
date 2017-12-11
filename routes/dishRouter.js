@@ -18,7 +18,7 @@ dishRouter
         res.json(dish);
       });
   })
-  .post(Verify.verifyOrdinaryUser,function (req, res) {
+  .post(Verify.verifyOrdinaryUser,Verify.VerifyAdmin,function (req, res) {
     Dishes
       .create(req.body, function (err, dish) {
         if (err)
@@ -29,7 +29,7 @@ dishRouter
         res.end("Added the dish with ID : " + dishId);
       });
   })
-  .delete(function (req, res) {
+  .delete(Verify.verifyOrdinaryUser,Verify.VerifyAdmin,function (req, res) {
     Dishes
       .remove({}, function (err, resp) {
         if (err)
