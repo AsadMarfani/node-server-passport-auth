@@ -11,10 +11,14 @@ var commentsSchema = new Schema({
   comment: {
     type: String
   },
-  author: {
-    type: String,
-    required: true
+  postedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
+  // author: {
+  //   type: String,
+  //   required: true
+  // }
 });
 var dishSchema = new Schema({
   name: {

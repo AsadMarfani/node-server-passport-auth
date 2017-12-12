@@ -22,7 +22,12 @@ router.post('/register', function (req, res) {
   // delete userInfo.password;
   // {username: req.body.username, admin: req.body.admin}
   User
-    .register(new User({username: req.body.username, admin: req.body.admin}), req.body.password, function (err, user) {
+    .register(new User({
+      username: req.body.username,
+      admin: req.body.admin,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname
+    }), req.body.password, function (err, user) {
       if (err)
         return res.status(500).json({err: err});
       passport.authenticate('local')(req, res, function () {
